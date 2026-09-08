@@ -13,8 +13,8 @@ devtools::install_github("yoyoong/PaaSc", ref = "main")
 ```
 Or install from local source:
 ```
-download.file("https://github.com/yoyoong/PaaSc/releases/download/1.0.0/PaaSc_1.0.0.tar.gz","PaaSc_1.0.0.tar.gz") 
-install.packages("PaaSc_1.0.0.tar.gz", repos = NULL, type="source")
+download.file("https://github.com/yoyoong/PaaSc/releases/download/1.0.1/PaaSc_1.0.1.tar.gz","PaaSc_1.0.1.tar.gz") 
+install.packages("PaaSc_1.0.1.tar.gz", repos = NULL, type="source")
 ```
 
 ## Tutorial
