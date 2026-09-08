@@ -1,7 +1,7 @@
 Package: PaaSc
 Type: Package
 Title: Pathway Activity Analysis for Single Cells
-Version: 1.0.0
+Version: 1.0.1
 Author: Hong Yuyang
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
@@ -9,4 +9,11 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports:
+    CelliD,
+    mixtools,
+    Seurat,
+    SeuratObject,
+    stats,
+    utils
 RoxygenNote: 7.3.1

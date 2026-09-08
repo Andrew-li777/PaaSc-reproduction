@@ -14,7 +14,51 @@
 #' @examples
 computeMCA <- function(object, nmcs = 20, features = NULL, slot = "data", assay = "RNA") {
   object <- NormalizeData(object)
-  object <- RunMCA(object, nmcs = nmcs, features = features, slot = slot, assay = assay)
+  init_assay <- DefaultAssay(object)
+  DefaultAssay(object) <- assay
+
+  # CelliD::RunMCA's Seurat method fetches the expression matrix with
+  # GetAssayData(X, slot = slot). The `slot` argument of GetAssayData() was deprecated in
+  # SeuratObject 5.0.0 and is defunct from 5.4.0, so that call aborts on current installs
+  # even though CelliD still ships it. Fetch the matrix here instead - with `layer` on
+  # SeuratObject >= 5, `slot` on earlier versions - and hand it to CelliD's matrix method.
+  data_matrix <- as.matrix(getExpressionMatrix(object, assay = assay, slot = slot))
+  MCA <- RunMCA(X = data_matrix, nmcs = nmcs, features = features)
+  object <- setMCASlot(object, cellEmb = MCA$cellsCoordinates,
+                       geneEmb = MCA$featuresCoordinates, stdev = MCA$stdev,
+                       reduction.name = "mca", assay = assay)
+
+  DefaultAssay(object) <- init_assay
+  return(object)
+}
+
+# Version-tolerant accessor for the expression matrix. SeuratObject renamed `slot` to
+# `layer` in 5.0.0; both spellings are kept working so that Seurat 4 installs are
+# unaffected.
+getExpressionMatrix <- function(object, assay = "RNA", slot = "data") {
+  if (utils::packageVersion("SeuratObject") >= "5.0.0") {
+    SeuratObject::GetAssayData(object, assay = assay, layer = slot)
+  } else {
+    SeuratObject::GetAssayData(object, assay = assay, slot = slot)
+  }
+}
+
+# Mirrors CelliD's setDimMCSlot.Seurat, which is not exported and so cannot be reached by
+# S3 dispatch from another package. Keeping the same dimension names ("mca_1", ...), the
+# sqrt() on stdev and the mca.flag means the resulting object is identical to the one
+# CelliD would have produced, so downstream code - including computeScore(weight = TRUE),
+# which reads stdev - behaves exactly as before.
+setMCASlot <- function(object, cellEmb, geneEmb, stdev = NULL,
+                       reduction.name = "mca", assay = "RNA") {
+  colnames(cellEmb) <- paste0(reduction.name, "_", seq(ncol(cellEmb)))
+  colnames(geneEmb) <- paste0(reduction.name, "_", seq(ncol(geneEmb)))
+  DimReducObject <- CreateDimReducObject(embeddings = cellEmb, loadings = geneEmb,
+                                         key = paste0(reduction.name, "_"), assay = assay)
+  object@reductions[[reduction.name]] <- DimReducObject
+  if (!is.null(stdev)) {
+    object@reductions[[reduction.name]]@stdev <- sqrt(stdev)
+  }
+  object@reductions[[reduction.name]]@misc[["mca.flag"]] <- TRUE
   return(object)
 }
 
