@@ -1,11 +1,33 @@
+# R & RStudio internal
 .Rproj.user
 *.Rproj
 .Rhistory
 .RData
 .Ruserdata
-*.rds
-*.csv
+.DS_Store
+**/__MACOSX/
+
+# Large binary datasets (>100MB or raw caches)
+*.zip
+*.tar.gz
+*.h5ad
+*.h5seurat
+*.mtx.gz
+zenodo_data/PaaSc_data/Fig6/IFN.RDS
+zenodo_data/PaaSc_data/Fig8/ST_braincortex.RDS
+
+# General media and output ignore
 *.pdf
-*.png
 *.jpg
 *.json
+
+# Allow reproduction results for GitHub portfolio showcase
+!repro_results/**/*.png
+!repro_results/*.png
+!repro_results/**/*.tsv
+!repro_results/*.tsv
+!repro_results/**/*.txt
+!repro_results/*.txt
+!repro_results/**/*.csv
+!repro_results/*.csv
+!repro_results/**/*.md

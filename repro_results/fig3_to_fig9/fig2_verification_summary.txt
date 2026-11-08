@@ -1,0 +1,58 @@
+PaaSc Figure 2 & SupFig 2A Verification Summary
+==============================================
+SupFig 2A (pbmc3k doRegression):
+  Evaluated MCA Dimensions: 20 
+  Max Pathway t-value: 4.9240 
+  Significant Dimensions (|t| > 1.96): 3 / 20 
+
+Fig 2B (PBMC 7 Subtypes AUC):
+     Method  Bcell    CD4    CD8   CD14   CD16     DC   pDC
+1 GSDensity 0.9980 0.9090 0.9570 0.9300 0.9870 0.9890 1.000
+2      GSEA 0.9970 0.8820 0.7310 0.9190 0.9460 0.7690 0.995
+3      GSVA 0.9790 0.8090 0.7350 0.9050 0.8680 0.9390 0.998
+4    CelliD 0.9860 0.9510 0.8650 0.9320 0.9640 0.9760 1.000
+5    AUCell 0.9970 0.9070 0.7900 0.9400 0.9520 0.8020 0.997
+6       VAM 0.9840 0.8030 0.8010 0.8970 0.9540 0.8670 0.996
+7     PaaSc 0.9990 0.9940 0.9070 0.9850 0.9880 0.9840 1.000
+8    scGSEA 0.9979 0.6398 0.6365 0.5411 0.5943 0.7408 0.733
+
+Mean AUC by Method across 7 subtypes:
+    Method  Mean_AUC
+     PaaSc 0.9795714
+ GSDensity 0.9671429
+    CelliD 0.9534286
+    AUCell 0.9121429
+       VAM 0.9002857
+      GSEA 0.8912857
+      GSVA 0.8904286
+    scGSEA 0.6976286
+
+Fig 2C (Downsampling Robustness at 20% vs 80%):
+    Method Percent  Mean_AUC
+     PaaSc      20 0.8926527
+ GSDensity      20 0.8841738
+    CelliD      20 0.8350860
+       VAM      20 0.7883812
+    AUCell      20 0.7740400
+      GSEA      20 0.7673309
+      GSVA      20 0.7565331
+    scGSEA      20 0.5782318
+     PaaSc      80 0.9170576
+ GSDensity      80 0.9076913
+    CelliD      80 0.8922543
+    AUCell      80 0.8528898
+       VAM      80 0.8523512
+      GSEA      80 0.8378919
+      GSVA      80 0.8361693
+    scGSEA      80 0.5782318
+
+Fig 2D (CITE-seq Ground Truth F1 Score):
+    methods    Mean_F1 Median_F1
+     CellID 0.72672059 0.7956168
+      PaaSc 0.65673050 0.7524997
+     AUCell 0.56904303 0.5611830
+ GDSdensity 0.49566488 0.5447467
+        VAM 0.46898124 0.4907978
+     scGSEA 0.34441278 0.1638186
+     ssGSEA 0.13076542 0.0148501
+       GSVA 0.05993736 0.0000000

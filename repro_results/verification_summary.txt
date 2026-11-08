@@ -1,0 +1,9 @@
+Features: 13714
+Cells: 2700
+B_cells_positive: 344
+Others_negative: 2356
+GMM_threshold: 0.5817
+ROC_AUC: 0.9981
+PaaSc_version: 1.0.1
+Seurat_version: 5.6.0
+SeuratObject_version: 5.4.0

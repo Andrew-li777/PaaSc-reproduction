@@ -1,0 +1,40 @@
+Figure	Panel	Metric	Value
+Fig3	CD8 T	N_cohorts	79
+Fig3	CD8 T	PaaSc_mean_AUC	0.8504
+Fig3	CD8 T	PaaSc_top1_wins	33/79
+Fig3	Macrophage	N_cohorts	92
+Fig3	Macrophage	PaaSc_mean_AUC	0.9378
+Fig3	Macrophage	PaaSc_top1_wins	36/92
+Fig3	NK	N_cohorts	27
+Fig3	NK	PaaSc_mean_AUC	0.9225
+Fig3	NK	PaaSc_top1_wins	16/27
+Fig3	DC	N_cohorts	16
+Fig3	DC	PaaSc_mean_AUC	0.8471
+Fig3	DC	PaaSc_top1_wins	2/16
+Fig3	Treg	N_cohorts	11
+Fig3	Treg	PaaSc_mean_AUC	0.9046
+Fig3	Treg	PaaSc_top1_wins	5/11
+Fig4D	GSE102090 (HUVEC)	PaaSc_AUC	0.9927
+Fig4D	GSE102090 (HUVEC)	GSDensity_AUC	0.6320
+Fig4D	GSE102090 (HUVEC)	CelliD_AUC	0.6170
+Fig4D	GSE119807 (HCA2)	PaaSc_AUC	0.8445
+Fig4D	GSE119807 (HCA2)	GSDensity_AUC	0.8244
+Fig4D	GSE119807 (HCA2)	CelliD_AUC	0.7374
+Fig4D	GSE115301-10X (IMR90)	PaaSc_AUC	0.8395
+Fig4D	GSE115301-10X (IMR90)	GSDensity_AUC	0.8242
+Fig4D	GSE115301-10X (IMR90)	CelliD_AUC	0.7729
+Fig4E	Top_Senescence_Hallmark	COAGULATION	0.968
+Fig5B	UKB_460K.blood_LYMPHOCYTE_COUNT	GMM_threshold	0.5029
+Fig5B	UKB_460K.blood_LYMPHOCYTE_COUNT	N_positive_cells	2981/10725
+Fig5D	Matched_Tissue_SigPairs	PaaSc	125
+Fig5D	Matched_Tissue_SigPairs	GSDensity	104
+Fig5D	Matched_Tissue_SigPairs	CelliD	61
+Fig7B	scATAC_16subtypes	PaaSc_median_AUC	0.9604
+Fig7B	scATAC_16subtypes	CelliD_median_AUC	0.9333
+Fig7B	scATAC_16subtypes	GSdensity_median_AUC	0.6813
+Fig7B	scATAC_16subtypes	pDC_PaaSc_vs_CelliD	0.9909 vs 0.4514
+Fig9B	CosMx_NSCLC_9celltypes	PaaSc_median_AUC	0.9763
+Fig9B	CosMx_NSCLC_9celltypes	CelliD_median_AUC	0.9663
+Fig9B	CosMx_NSCLC_9celltypes	GSDensity_median_AUC	0.6936
+Fig9D	Top_Spatial_Hallmark	HEDGEHOG_SIGNALING	0.3843
+Fig9E	CosMx_98002_cells	Max_Pearson_r_pair	Tumor edge vs ESTROGEN_RESPONSE_EARLY (r=0.933)
