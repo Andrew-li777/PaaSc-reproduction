@@ -1,0 +1,20 @@
+PaaSc Figure 6 Full End-to-End Recomputation Summary
+======================================================
+Dataset: IFN.RDS (GSE96583 PBMC Ctrl vs IFN-beta Stim)
+Dimensions: 16142 genes x 28871 cells | B cells: 2871 
+IFN Pathway: MSigDB 26.1.1 GOBP_INTERFERON_MEDIATED_SIGNALING_PATHWAY (n = 113 , overlap = 89 )
+Control Pathway: B_cell_activation.txt (n = 278 , overlap = 233 )
+
+--- Correlation (Local Recomputed vs Author Archived Scores) ---
+  PaaSc INTERFERON Pearson r:          1.000000
+  PaaSc B_cell_activation Pearson r:   1.000000
+  CelliD INTERFERON Pearson r:         0.999238
+  CelliD B_cell_activation Pearson r:  0.999618
+
+--- IFN Pathway ROC AUC (All 28,871 cells, ctrl vs stim) ---
+   PaaSc_recomp  PaaSc_archived  GSdensity_arch   CelliD_recomp CelliD_archived 
+         0.9573          0.9573          0.5575          0.6039          0.6037 
+
+--- B-cell Activation ROC AUC (B cells only, ctrl vs stim negative control) ---
+   PaaSc_recomp  PaaSc_archived  GSdensity_arch   CelliD_recomp CelliD_archived 
+         0.4635          0.4635          0.5562          0.5121          0.5122 

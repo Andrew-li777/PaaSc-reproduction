@@ -1,0 +1,20 @@
+CellType	abbreviation	tissue
+proerythroblast	Proerythroblas	blood/immune
+granulocyte monocyte progenitor cell	GMP	blood/immune
+classical monocyte	Classical monocyte	blood/immune
+dendritic cell	Dendritic	blood/immune
+CD4-positive, alpha-beta T cell	CD4+ α-β T	blood/immune
+CD8-positive, alpha-beta T cell	CD8+ α-β T	blood/immune
+regulatory T cell	Regulatory T	blood/immune
+medium spiny neuron	MSN	brain
+interneuron	Interneuron	brain
+neuron	Neuron	brain
+oligodendrocyte	Oligodendrocyte	brain
+oligodendrocyte precursor cell	OPC	brain
+Bergmann glial cell	Bergmann glial	brain
+astrocyte	Astrocyte	brain
+hepatocyte	Hepatocyte	others
+chondrocyte	Chondrocyte	others
+bladder cell	Bladder cell	others
+ventricular myocyte	Ventricular myocyte	others
+pancreatic B cell	Pancreatic beta	others

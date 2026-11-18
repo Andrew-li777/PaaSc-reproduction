@@ -1,0 +1,31 @@
+PaaSc Figure 8 Full End-to-End Recomputation Summary
+======================================================
+Dataset: ST_braincortex.RDS (Visium DLPFC Sample 151673)
+Features: 4000 | Spots: 3639 | Annotated spots: 3611 
+Background GMT: d:/project/gemini/reproduction/PaaSc/data/kegg_legacy.gmt | KEGG overlap: 1040 / 4000 
+
+--- Score Correlation (Local Recomputed vs Author Archived) ---
+ Layer PaaSc_rdsMCA_cor PaaSc_freshMCA_cor  CelliD_cor
+  L2/3        0.9998434          0.9998434  0.99944002
+    L4        0.9998123          0.9998123  0.99887649
+    L5        0.4475811          0.4475577 -0.01833542
+    L6        0.9998308          0.9998308  0.99955116
+
+--- ROC AUC Benchmark Across Cortical Layers ---
+ Layer PaaSc_recomp_RDS PaaSc_recomp_Fresh PaaSc_archived GSDensity_archived
+  L2/3        0.8626703          0.8626703      0.8591671          0.8173717
+    L4        0.7029435          0.7029435      0.7029076          0.6700236
+    L5        0.7701527          0.7701366      0.6986406          0.7760204
+    L6        0.8605177          0.8605177      0.8602321          0.7240023
+ CelliD_recomp CelliD_archived
+     0.6711524       0.6779499
+     0.4990976       0.4916094
+     0.7210945       0.4848363
+     0.7550870       0.7594318
+
+Median AUCs:
+  PaaSc (Recomputed Fresh MCA): 0.8153 
+  PaaSc (Recomputed RDS MCA):   0.8153 
+  PaaSc (Author Archived):      0.7810 
+  GSDensity (Author Archived):  0.7500 
+  CelliD (Recomputed):          0.6961 

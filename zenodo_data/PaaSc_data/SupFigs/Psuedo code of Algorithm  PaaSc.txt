@@ -1,0 +1,42 @@
+Algorithm 1 PaaSc
+Input: Gene expression matrix X; Gene occurance rate of pathway(P) and background(B)
+Output: Pathway activity score of single-cell
+1: procedure PAASC(X, P, B)
+2:    W, H ← MCA(X)
+3:    S ← ∅
+4:    T ← ∅
+5:    for k = 1 to d do
+6:       β, se ← REGRESSION(W[:, k], P, B)
+7:       t ← β/se
+8:       if |t| > threshold then
+9:          S ← S ∪ {k}
+10:        T ← T ∪ {t}
+11:      end if
+12:   end for
+13:   Z ← WEIGHTEDSCORE(H, S, T)
+14:   A ← NORMALIZE(Z)
+15:   return A
+16: end procedure
+17: procedure MCA(X)
+18:   M ← CORRESPONDENCE(X)
+19:   W, H, σ ← DECOMPOSE(M)
+20:   return W, H
+21: end procedure
+22: procedure REGRESSION(w, P, B)
+23:   y ← w
+24:   x ← ENCODE(P, B)
+25:   β, se ← LINEARFIT(y, x)
+26:   β_P ← β[index_P]
+27:   se_P ← se[index_P]
+28:   return β_P, se_P
+29: end procedure
+30: procedure WEIGHTEDSCORE(H, S, T)
+31:   n ← nrow(H)
+32:   Z ← zeros(n)
+33:   for i = 1 to |S| do
+34:      k ← S[i]
+35:      t ← T[i]
+36:      Z ← Z + t × H[k, :]
+37:   end for
+38:   return Z
+39: end procedure

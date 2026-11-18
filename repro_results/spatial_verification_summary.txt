@@ -1,0 +1,6 @@
+Spatial_features: 17668
+Spatial_spots: 3353
+GOBP_pathways_total: 7535
+Valid_scored_pathways: 6
+Significant_spatial_pathways_q0.05: 5
+Top_MI_pathway: GOBP_RESPONSE_TO_COCAINE (MI=1.6655)
