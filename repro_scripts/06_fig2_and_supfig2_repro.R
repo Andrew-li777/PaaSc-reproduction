@@ -5,7 +5,7 @@
 # 数据来源：
 # 1. SupFig 2A: 基于 data/pbmc3k_filtered_gene_bc_matrices/hg19 现场重算 doRegression
 # 2. Fig 2B: zenodo_data/PaaSc_data/Fig2/2B.txt (8种算法 x 7种PBMC亚型 AUC)
-# 3. Fig 2C: zenodo_data/PaaSc_data/Fig2/2C.txt (20%-80% 降采样 Dropout 鲁棒性)
+# 3. Fig 2C: zenodo_data/PaaSc_data/Fig2/2C.txt (20%-100% 标记基因集降采样鲁棒性)
 # 4. Fig 2D: zenodo_data/PaaSc_data/Fig2/2D.txt (CITE-seq 蛋白真值 F1/Precision/Recall)
 #
 # 输出文件：
@@ -20,11 +20,23 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-base_dir <- "d:/project/gemini/reproduction/PaaSc"
+get_project_root <- function() {
+  c_args <- commandArgs(trailingOnly = FALSE)
+  file_arg <- grep("^--file=", c_args, value = TRUE)
+  if (length(file_arg) > 0) {
+    script_dir <- dirname(normalizePath(sub("^--file=", "", file_arg[[1]]), mustWork = TRUE))
+    return(normalizePath(file.path(script_dir, ".."), mustWork = TRUE))
+  }
+  normalizePath(getwd(), mustWork = TRUE)
+}
+
+base_dir <- get_project_root()
 data_dir <- file.path(base_dir, "data")
 zen_dir  <- file.path(base_dir, "zenodo_data", "PaaSc_data")
 out_dir  <- file.path(base_dir, "repro_results", "fig3_to_fig9")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+
+set.seed(42)
 
 cat("=== 1. Calculating SupFig 2A: MCA Regression t-values on pbmc3k ===\n")
 pbmc_mat <- Read10X(file.path(data_dir, "pbmc3k_filtered_gene_bc_matrices", "hg19"))
@@ -122,8 +134,8 @@ p_2c <- ggplot(df_2c, aes(x = Percent, y = x, color = Method, group = Method)) +
   scale_color_manual(values = method_cols) +
   scale_x_continuous(breaks = seq(20, 100, by = 10), labels = paste0(seq(20, 100, by = 10), "%")) +
   labs(
-    title = "Fig 2C: Downsampling Robustness Across Dropout Levels",
-    x = "Subsampled Sequencing Depth",
+    title = "Fig 2C: Downsampling Robustness Across Marker Gene Fractions",
+    x = "Subsampled Marker Gene Fraction",
     y = "Mean AUC"
   ) +
   theme_minimal(base_size = 11) +
@@ -183,7 +195,7 @@ cat("PaaSc Figure 2 & SupFig 2A Verification Summary\n")
 cat("==============================================\n")
 cat("SupFig 2A (pbmc3k doRegression):\n")
 cat("  Evaluated MCA Dimensions:", n_dims, "\n")
-cat("  Max Pathway t-value:", sprintf("%.4f", max(df_s2a$tvalue[df_s2a$Group == "Pathway (B-cell)"])), "\n")
+cat("  Max |Pathway t-value|:", sprintf("%.4f", max(abs(df_s2a$tvalue[df_s2a$Group == "Pathway (B-cell)"]))), "\n")
 cat("  Significant Dimensions (|t| > 1.96):", sum(abs(df_s2a$tvalue[df_s2a$Group == "Pathway (B-cell)"]) > 1.96), "/", n_dims, "\n\n")
 
 cat("Fig 2B (PBMC 7 Subtypes AUC):\n")
@@ -197,7 +209,7 @@ f2c_summary <- df_2c %>% filter(Percent %in% c(20, 80)) %>% arrange(Percent, des
 print(as.data.frame(f2c_summary %>% select(Method, Percent, Mean_AUC = x)), row.names = FALSE)
 
 cat("\nFig 2D (CITE-seq Ground Truth F1 Score):\n")
-f2d_summary <- df_2d %>% group_by(methods) %>% summarise(Mean_F1 = mean(value), Median_F1 = median(value), .groups = "drop") %>% arrange(desc(Mean_F1))
+f2d_summary <- df_2d %>% group_by(Method) %>% summarise(Mean_F1 = mean(value), Median_F1 = median(value), .groups = "drop") %>% arrange(desc(Mean_F1))
 print(as.data.frame(f2d_summary), row.names = FALSE)
 sink()
 

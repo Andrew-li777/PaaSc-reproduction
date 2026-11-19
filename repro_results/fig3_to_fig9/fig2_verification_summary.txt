@@ -2,7 +2,7 @@ PaaSc Figure 2 & SupFig 2A Verification Summary
 ==============================================
 SupFig 2A (pbmc3k doRegression):
   Evaluated MCA Dimensions: 20 
-  Max Pathway t-value: 4.9240 
+  Max |Pathway t-value|: 4.9240 
   Significant Dimensions (|t| > 1.96): 3 / 20 
 
 Fig 2B (PBMC 7 Subtypes AUC):
@@ -47,12 +47,12 @@ Fig 2C (Downsampling Robustness at 20% vs 80%):
     scGSEA      80 0.5782318
 
 Fig 2D (CITE-seq Ground Truth F1 Score):
-    methods    Mean_F1 Median_F1
-     CellID 0.72672059 0.7956168
-      PaaSc 0.65673050 0.7524997
-     AUCell 0.56904303 0.5611830
- GDSdensity 0.49566488 0.5447467
-        VAM 0.46898124 0.4907978
-     scGSEA 0.34441278 0.1638186
-     ssGSEA 0.13076542 0.0148501
-       GSVA 0.05993736 0.0000000
+    Method    Mean_F1 Median_F1
+    CelliD 0.72672059 0.7956168
+     PaaSc 0.65673050 0.7524997
+    AUCell 0.56904303 0.5611830
+ GSDensity 0.49566488 0.5447467
+       VAM 0.46898124 0.4907978
+    scGSEA 0.34441278 0.1638186
+      GSEA 0.13076542 0.0148501
+      GSVA 0.05993736 0.0000000

@@ -37,7 +37,17 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-base_dir <- "d:/project/gemini/reproduction/PaaSc"
+get_project_root <- function() {
+  c_args <- commandArgs(trailingOnly = FALSE)
+  file_arg <- grep("^--file=", c_args, value = TRUE)
+  if (length(file_arg) > 0) {
+    script_dir <- dirname(normalizePath(sub("^--file=", "", file_arg[[1]]), mustWork = TRUE))
+    return(normalizePath(file.path(script_dir, ".."), mustWork = TRUE))
+  }
+  normalizePath(getwd(), mustWork = TRUE)
+}
+
+base_dir <- get_project_root()
 fig8_dir <- file.path(base_dir, "zenodo_data", "PaaSc_data", "Fig8")
 bg_gmt   <- file.path(base_dir, "data", "kegg_legacy.gmt")
 out_dir  <- file.path(base_dir, "repro_results", "fig3_to_fig9")
@@ -72,6 +82,7 @@ paasc_rds <- computeScore(obj, regression.data = reg_rds, pvalue = 0.05, weight 
 colnames(paasc_rds) <- names(markers)
 
 # (B) Fresh computeMCA from counts/data
+set.seed(42)
 obj_fresh <- obj
 obj_fresh <- computeMCA(obj_fresh, nmcs = 20)
 reg_fresh <- doRegression(obj_fresh, gene.rate = gene_rate)
@@ -168,7 +179,7 @@ p_box <- ggplot(plot_auc_df, aes(x = method, y = AUC)) +
   labs(
     x = NULL,
     y = "ROC AUC",
-    title = "Fig 8B: Visium DLPFC Brain Cortex Layer Specificity (n = 3,639 spots)",
+    title = "Fig 8B: Visium DLPFC Brain Cortex Layer Specificity (n = 3,611 annotated / 3,639 spots)",
     subtitle = "Recomputed PaaSc (fresh MCA) & CelliD from ST_braincortex.RDS vs. Archived GSDensity"
   ) +
   theme_minimal(base_size = 12) +
@@ -250,7 +261,7 @@ cat("======================================================\n")
 cat("Dataset: ST_braincortex.RDS (Visium DLPFC Sample 151673)\n")
 cat("Features:", nrow(obj), "| Spots:", ncol(obj), "| Annotated spots:", length(ref_clean), "\n")
 kegg_genes <- unique(unlist(lapply(strsplit(readLines(bg_gmt), "\t"), function(x) x[-(1:2)])))
-cat("Background GMT:", bg_gmt, "| KEGG overlap:", sum(rownames(obj) %in% kegg_genes), "/", nrow(obj), "\n\n")
+cat("Background GMT: data/kegg_legacy.gmt | KEGG overlap:", sum(rownames(obj) %in% kegg_genes), "/", nrow(obj), "\n\n")
 cat("--- Score Correlation (Local Recomputed vs Author Archived) ---\n")
 print(as.data.frame(cor_tbl), row.names = FALSE)
 cat("\n--- ROC AUC Benchmark Across Cortical Layers ---\n")

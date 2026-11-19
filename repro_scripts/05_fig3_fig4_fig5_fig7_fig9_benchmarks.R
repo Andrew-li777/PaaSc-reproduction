@@ -8,7 +8,7 @@
 #   2. Part 2 (Fig 4D-E): 3 套体外/体内细胞衰老 scRNA-seq 队列 ROC 验证 + 泛癌患者水平 Hallmark 协同热图
 #   3. Part 3 (Fig 5A-D): Tabula Muris Senis (10,725 细胞) x 75 UKB/GWAS 多基因遗传风险性状组织特异富集
 #   4. Part 4 (Fig 7B): PBMC scATAC-seq (10,459 细胞) Gene-Activity 16 种免疫亚型识别基准
-#   5. Part 5 (Fig 9B/D/E): NanoString CosMx SMI NSCLC 空间转录/蛋白单细胞 (98,002 细胞) 微环境分区与空间自相关
+#   5. Part 5 (Fig 9B/D/E): NanoString CosMx SMI NSCLC 空间转录组单细胞 (98,002 细胞) 微环境分区与空间互信息
 #   6. Part 6: 导出汇总量化验收指标表 (fig3_to_fig9_summary.tsv)
 #
 # 数据来源说明 (诚实边界):
@@ -37,7 +37,17 @@ suppressPackageStartupMessages({
   library(PaaSc)
 })
 
-base_dir <- "d:/project/gemini/reproduction/PaaSc"
+get_project_root <- function() {
+  c_args <- commandArgs(trailingOnly = FALSE)
+  file_arg <- grep("^--file=", c_args, value = TRUE)
+  if (length(file_arg) > 0) {
+    script_dir <- dirname(normalizePath(sub("^--file=", "", file_arg[[1]]), mustWork = TRUE))
+    return(normalizePath(file.path(script_dir, ".."), mustWork = TRUE))
+  }
+  normalizePath(getwd(), mustWork = TRUE)
+}
+
+base_dir <- get_project_root()
 zen_dir  <- file.path(base_dir, "zenodo_data", "PaaSc_data")
 out_dir  <- file.path(base_dir, "repro_results", "fig3_to_fig9")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
@@ -586,7 +596,7 @@ add_summary("Fig9D", "Top_Spatial_Hallmark", smi9$Hallmark_short[1], sprintf("%.
 
 p9d <- ggplot(head(smi9, 20), aes(x = MI, y = reorder(Hallmark_short, MI))) +
   geom_col(fill = "#D95F02", alpha = 0.85, width = 0.7) +
-  labs(title = "Fig 9D: Top 20 Spatial Auto-Correlated Hallmarks", x = "Spatial Moran/MI (PaaSc)", y = NULL) +
+  labs(title = "Fig 9D: Top 20 Spatially Structured Hallmarks", x = "Spatial Mutual Information (MI, PaaSc)", y = NULL) +
   theme_minimal(base_size = 10.5) +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),

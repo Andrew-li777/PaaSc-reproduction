@@ -36,7 +36,17 @@ suppressPackageStartupMessages({
   library(patchwork)
 })
 
-base_dir <- "d:/project/gemini/reproduction/PaaSc"
+get_project_root <- function() {
+  c_args <- commandArgs(trailingOnly = FALSE)
+  file_arg <- grep("^--file=", c_args, value = TRUE)
+  if (length(file_arg) > 0) {
+    script_dir <- dirname(normalizePath(sub("^--file=", "", file_arg[[1]]), mustWork = TRUE))
+    return(normalizePath(file.path(script_dir, ".."), mustWork = TRUE))
+  }
+  normalizePath(getwd(), mustWork = TRUE)
+}
+
+base_dir <- get_project_root()
 fig6_dir <- file.path(base_dir, "zenodo_data", "PaaSc_data", "Fig6")
 bg_gmt   <- file.path(base_dir, "data", "kegg_legacy.gmt")
 bcell_pt <- file.path(base_dir, "data", "B_cell_activation.txt")
